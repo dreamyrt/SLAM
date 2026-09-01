@@ -1,0 +1,5 @@
+mkdir soc-splunk-portfolio
+cd soc-splunk-portfolio
+touch docker-compose.yml attack_sim.py README.md requirements.txt .gitignore
+mkdir splunk_resources
+touch splunk_resources/spl_queries.txt

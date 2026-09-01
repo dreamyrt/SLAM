@@ -1,0 +1,30 @@
+services:
+  splunk:
+    image: splunk/splunk:9.3.0
+    container_name: splunk_siem
+    platform: linux/amd64  # <--- Ось ця магія для Mac на процесорах M1/M2/M3
+    environment:
+      - SPLUNK_START_ARGS=--accept-license
+      - SPLUNK_GENERAL_TERMS=--accept-sgt-current-at-splunk-com # <-- Додали цей рядок
+      - SPLUNK_PASSWORD=Secur1tyP@ssw0rd!
+      - SPLUNK_USER=root
+    ports:
+      - "8000:8000" # Web UI
+      - "8089:8089" # API
+    volumes:
+      - shared_logs:/var/log/nginx_logs # Монтуємо логи NGINX у Splunk
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx_target
+    ports:
+      - "8080:80" # Порт веб-сервера для атак
+    volumes:
+      - shared_logs:/var/log/nginx
+    # Відключаємо симлінки на консоль, щоб логи писалися у файли для Splunk
+    command: /bin/sh -c "unlink /var/log/nginx/access.log && unlink /var/log/nginx/error.log && touch /var/log/nginx/access.log && nginx -g 'daemon off;'"
+    restart: unless-stopped
+
+volumes:
+  shared_logs:
