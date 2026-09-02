@@ -30,35 +30,6 @@ SLAM (Splunk Log & Attack Monitoring) — локальна SIEM-лаборато
 
 SLAM складається з трьох основних компонентів:
 
-┌─────────────────────────┐
-│   SLAM Attack Simulator │
-│      Python / requests  │
-└────────────┬────────────┘
-│
-│ HTTP Requests
-▼
-┌─────────────────────────┐
-│          NGINX          │
-│      Web Target         │
-│                         │
-│  access.log / error.log │
-└────────────┬────────────┘
-│
-│ Log Collection
-▼
-┌─────────────────────────┐
-│    Splunk Enterprise     │
-│          SIEM            │
-│                         │
-│  Index: web_logs         │
-└─────────────────────────┘
-│
-▼
-SPL / Alerts
-│
-▼
-SOC Investigation
-
 1. Splunk Enterprise
 
 Центральний компонент лабораторії, який використовується для:
